@@ -1,7 +1,7 @@
 # Rest API in golang
 
 ## Introduction
-This a rest API which can hold a booking for the guests for a party
+This is a REST API which can hold booking for the guests for a party.
 ### Scope
 - Booking for guests
 - Arriving (when a guest arrives)
@@ -10,30 +10,30 @@ This a rest API which can hold a booking for the guests for a party
 ## Database
 
 There will be 2 tables present. 
-- Guests - This will keep track of all guests who have booked, arrived or left after arriving
-  This table has 4 columns
-  - table_number - Table at which guest is sitting. This will also referenece table_number field of collection `Table`. However reference is not made in the database explicitly as `Table.table_number` is a constant field 
-  - name - Name of the guest (assumed unique)
-  - accompanying guests - Number of guests accompanied by this guest
-  - time_arrived - Arrival time of the guest
-  - id - random unique id (auto incemented field of sql)
-  - created_at - creation time of this row. Can be treated as booking time.
-  - updated_at - last updation time
-  - deleted_at - deletion time of the row. This field will be populated when a guest leaves i.e When a guest leaves he/she will be deleted(soft delete) from table data and will not be listed in any of the API (according to the scope of this API however can be enhanced later)
+- Guests - This will keep track of all guests who have booked, arrived or left the party.
+  This table has following columns
+  - table_number - Table at which guest is sitting. This will also reference table_number field of table `Tables`. However reference is not made in the database explicitly as `Tables.table_number` is a constant field.
+  - name - Name of the guest (assumed unique).
+  - accompanying guests - Number of guests accompanied by this guest.
+  - time_arrived - Arrival time of the guest.
+  - id - random unique id (auto incremented field of sql).
+  - created_at - creation time of this row. Can be treated as booking time of the guest.
+  - updated_at - last updation time.
+  - deleted_at - deletion time of the row. This field will be populated when a guest leaves. When a guest leaves he/she will be deleted(soft delete) from table data and will not be listed in any of the API (according to the scope of this API however can be enhanced later).
 - Tables - This will be a sort of constant table which will contain the record of tables available in the venue and their capacity(assuming capacity of all tables will be same initially).
   This table has 2 columns
-  - table_number - Unique number assigned to each table (auto incremented field of sql).
+  - table_number - Unique number assigned to each table of the venue (auto incremented field of sql).
   - seats_empty - Will denote the number of seats left empty at a table at any point of time in the party.
 
 ```
------------------------                   ----------------
-|       Guests        |                   |    Tables    |
------------------------                   ---------------
-|    table_number     | ---References-->  | table_number |
-|        name         |                   | seats_empty  |
-| accompanying_guests |                   ----------------
+-----------------------                   ----------------------------
+|       Guests        |                   |           Tables         |
+-----------------------                   ----------------------------
+|    table_number     | ---References-->  | table_number(PrimaryKey) |
+|        name         |                   |        seats_empty       |
+| accompanying_guests |                   ----------------------------
 |    time_arrived     |
-|   id(primarykey)    |
+|   id(PrimaryKey)    |
 |     created_at      |
 |     updatd_at       |
 |     deleted_at      |
